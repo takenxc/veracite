@@ -1,0 +1,539 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--or:#E8820C;--ord:#B86200;--orl:#F5A340;--bk:#0F0F0F;--wh:#FFFFFF;--g1:#F6F4F0;--g2:#E4E1DA;--gt:#52514D;--serif:'Georgia',serif;}
+.page{display:none;}.page.active{display:block;}
+nav{background:var(--or);display:flex;align-items:stretch;border-bottom:2px solid var(--ord);}
+.nl{background:var(--bk);color:var(--wh);padding:10px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;min-width:108px;}
+.nl .est{font-size:8px;letter-spacing:2px;opacity:.6;text-transform:uppercase;margin-bottom:2px;}
+.nl .logo{font-family:var(--serif);font-size:15px;font-weight:bold;letter-spacing:1px;}
+.nlinks{display:flex;flex:1;overflow-x:auto;}
+.nlink{color:var(--wh);padding:0 14px;font-family:var(--serif);font-size:12px;cursor:pointer;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,.18);white-space:nowrap;transition:background .15s;}
+.nlink:hover,.nlink.on{background:rgba(0,0,0,.22);}
+.hero{background:var(--wh);border-bottom:2px solid var(--bk);position:relative;overflow:hidden;}
+.hblob{position:absolute;border-radius:50%;background:var(--or);opacity:.1;}
+.hinner{padding:28px 28px 0;position:relative;z-index:1;display:flex;align-items:flex-start;gap:24px;}
+.htitle{font-family:var(--serif);font-size:58px;font-weight:400;letter-spacing:-1px;color:var(--bk);line-height:1;flex:1;}
+.hright{display:flex;flex-direction:column;gap:10px;min-width:190px;padding-top:4px;}
+.hcta{border:1.5px solid var(--bk);padding:8px 13px;font-size:11px;font-family:var(--serif);letter-spacing:.5px;cursor:pointer;background:var(--wh);text-align:center;transition:background .15s,color .15s;}
+.hcta:hover{background:var(--bk);color:var(--wh);}
+.hdate{font-size:10px;color:var(--gt);letter-spacing:.5px;margin-top:2px;}
+.habout-bar{background:var(--or);color:var(--wh);padding:10px 28px;font-size:11px;line-height:1.6;display:flex;align-items:center;gap:16px;border-top:1px solid var(--ord);}
+.habout-bar strong{font-family:var(--serif);font-size:12px;white-space:nowrap;}
+.slabel{font-family:var(--serif);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ord);padding-bottom:4px;margin-bottom:12px;border-bottom:1.5px solid var(--bk);display:flex;align-items:center;gap:8px;}
+.slabel::after{content:'';flex:1;height:1px;background:var(--g2);}
+.mgrid{display:grid;grid-template-columns:3fr 2fr;border-top:1px solid var(--g2);}
+.cl{padding:20px 20px 20px 28px;border-right:1px solid var(--g2);}
+.cr{padding:18px 24px 18px 18px;}
+.hgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;margin-bottom:14px;}
+.hcard{border:1px solid var(--g2);cursor:pointer;background:var(--wh);transition:border-color .15s;}
+.hcard:hover{border-color:var(--or);}
+.hcimg{background:var(--g1);height:54px;position:relative;overflow:hidden;border-bottom:1px solid var(--g2);}
+.hcblob{width:28px;height:28px;border-radius:50%;background:var(--or);opacity:.22;position:absolute;top:7px;left:7px;}
+.hcbody{padding:7px 8px 8px;}
+.hccat{font-size:7px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ord);margin-bottom:2px;}
+.hctitle{font-size:10px;font-family:var(--serif);font-weight:bold;line-height:1.4;color:var(--bk);}
+.about-panel{background:var(--g1);border:1px solid var(--g2);padding:12px 14px;margin-top:2px;}
+.about-panel h4{font-family:var(--serif);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ord);margin-bottom:7px;border-bottom:1px solid var(--g2);padding-bottom:5px;}
+.about-panel p{font-size:11px;line-height:1.7;color:var(--gt);}
+.about-panel p+p{margin-top:6px;}
+.sumtext{font-size:12px;line-height:1.85;color:#1a1a1a;}
+.sumtext p{margin-bottom:11px;}
+.sumtext p:last-child{margin-bottom:0;}
+.slink{color:var(--ord);text-decoration:underline;cursor:pointer;font-weight:bold;}
+.slink:hover{color:var(--or);}
+.gterm{border-bottom:1px dotted var(--ord);cursor:pointer;position:relative;}
+.ttip{display:none;position:absolute;bottom:100%;left:0;background:var(--bk);border:1px solid var(--or);color:var(--wh);font-size:10px;line-height:1.5;padding:7px 10px;width:220px;z-index:50;font-style:normal;font-weight:400;}
+.gterm:hover .ttip{display:block;}
+.sitem{padding:7px 0;border-bottom:.5px solid var(--g2);cursor:pointer;}
+.sitem:hover .sititle{color:var(--ord);}
+.sicat{font-size:7px;letter-spacing:1.2px;text-transform:uppercase;color:var(--or);margin-bottom:2px;}
+.sititle{font-size:11px;font-family:var(--serif);font-weight:bold;color:var(--bk);line-height:1.35;}
+.siblurb{font-size:10px;color:var(--gt);margin-top:2px;line-height:1.5;}
+.sfooter{background:var(--bk);color:rgba(255,255,255,.5);font-size:10px;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;letter-spacing:.4px;}
+.sfooter span{color:var(--orl);font-weight:bold;}
+.chero{background:var(--bk);color:var(--wh);padding:20px 28px 16px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--or);}
+.chtitle{font-size:24px;font-family:var(--serif);font-weight:400;}
+.chsub{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;}
+.chico{width:46px;height:46px;border:2px solid var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--or);}
+.alist{padding:20px 28px;background:var(--wh);}
+.arow{display:grid;grid-template-columns:80px 1fr;gap:12px;padding:12px 0;border-bottom:.5px solid var(--g2);cursor:pointer;}
+.arow:hover .atitle{color:var(--ord);}
+.athumb{background:var(--g1);height:58px;border:1px solid var(--g2);position:relative;overflow:hidden;}
+.atblob{width:22px;height:22px;border-radius:50%;background:var(--or);opacity:.2;position:absolute;top:5px;left:5px;}
+.adate{font-size:9px;color:var(--ord);margin-bottom:2px;}
+.atitle{font-size:13px;font-family:var(--serif);font-weight:bold;line-height:1.4;margin-bottom:4px;color:var(--bk);}
+.asum{font-size:11px;color:var(--gt);line-height:1.55;}
+.thead{background:var(--or);padding:20px 28px;border-bottom:2px solid var(--ord);}
+.thead h2{font-size:22px;font-family:var(--serif);font-weight:400;color:var(--wh);}
+.thead p{font-size:11px;color:rgba(255,255,255,.75);margin-top:3px;}
+.tfilters{display:flex;gap:8px;padding:14px 28px;background:var(--g1);border-bottom:1px solid var(--g2);flex-wrap:wrap;}
+.tfbtn{font-size:10px;font-family:var(--serif);letter-spacing:.5px;padding:4px 12px;border:1px solid var(--g2);background:var(--wh);cursor:pointer;transition:background .15s,border-color .15s;}
+.tfbtn:hover,.tfbtn.on{background:var(--or);color:var(--wh);border-color:var(--ord);}
+.tbody{padding:20px 28px;position:relative;background:var(--wh);}
+.tline{position:absolute;left:66px;top:0;bottom:0;width:2px;background:var(--g2);}
+.titem{display:grid;grid-template-columns:44px 1fr;gap:14px;margin-bottom:20px;position:relative;}
+.titem.hidden{display:none;}
+.tyear{font-family:var(--serif);font-size:11px;font-weight:bold;color:var(--ord);text-align:right;padding-top:2px;}
+.tdot{position:absolute;left:58px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--or);border:2px solid var(--wh);box-shadow:0 0 0 1.5px var(--ord);z-index:2;}
+.tcontent{background:var(--g1);border-left:3px solid var(--or);padding:7px 11px 9px;border-radius:0;}
+.tevent{font-size:12px;font-family:var(--serif);font-weight:bold;margin-bottom:2px;color:var(--bk);}
+.tdesc{font-size:11px;color:var(--gt);line-height:1.6;}
+.ttag{display:inline-block;font-size:8px;letter-spacing:.8px;text-transform:uppercase;padding:1px 6px;margin-bottom:5px;border:1px solid var(--g2);color:var(--gt);background:var(--wh);}
+.ttag.war{color:#8B0000;border-color:#c99;}
+.ttag.sci{color:#0a4d2e;border-color:#9dc;}
+.ttag.pol{color:#1a3a6b;border-color:#9ab;}
+.ttag.cul{color:#5a2d82;border-color:#c9b;}
+.ttag.eco{color:#5a4000;border-color:#d4b;}
+.ttag.spo{color:#1a4d1a;border-color:#9c9;}
+.afull{padding:26px 28px;max-width:100%;background:var(--wh);}
+.afcat{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ord);margin-bottom:8px;}
+.aftitle{font-size:21px;font-family:var(--serif);font-weight:400;line-height:1.3;margin-bottom:9px;color:var(--bk);}
+.afmeta{font-size:10px;color:var(--gt);margin-bottom:14px;padding-bottom:11px;border-bottom:1px solid var(--g2);}
+.afbody{font-size:13px;line-height:1.9;color:#1a1a1a;}
+.afbody p{margin-bottom:13px;}
+.afbody h3{font-size:13px;font-family:var(--serif);font-weight:bold;margin:18px 0 7px;border-left:3px solid var(--or);padding-left:8px;border-radius:0;color:var(--bk);}
+.gloss{background:var(--g1);border-top:2px solid var(--or);margin-top:22px;padding:13px 15px;}
+.gloss h4{font-family:var(--serif);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ord);margin-bottom:9px;}
+.gentry{margin-bottom:8px;padding-bottom:8px;border-bottom:.5px solid var(--g2);}
+.gentry:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.gword{font-family:var(--serif);font-size:12px;font-weight:bold;color:var(--bk);}
+.gdef{font-size:11px;color:var(--gt);line-height:1.6;margin-top:2px;}
+.backbtn{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.5px;color:var(--ord);cursor:pointer;margin:12px 28px;text-transform:uppercase;}
+.backbtn:hover{text-decoration:underline;}
+.hdiv{height:1px;background:var(--g2);margin:0 28px;}
+#page-article{background:var(--wh);}#page-cat{background:var(--wh);}#page-timeline{background:var(--wh);}
+</style>
+
+<div id="app" style="background:#fff;font-family:Georgia,serif;">
+
+<nav>
+  <div class="nl" onclick="SP('home')"><span class="est">Est. 2026</span><span class="logo">VERACITE</span></div>
+  <div class="nlinks">
+    <div class="nlink on" id="nh" onclick="SP('home')">Home</div>
+    <div class="nlink" id="nw" onclick="SC('war')">War &amp; Conflict</div>
+    <div class="nlink" id="nt" onclick="SC('tech')">Technological Innovation</div>
+    <div class="nlink" id="np" onclick="SC('pol')">Politics &amp; Government</div>
+    <div class="nlink" id="ns" onclick="SC('soc')">Society &amp; Culture</div>
+    <div class="nlink" id="ntl" onclick="SP('timeline')">&#9654; Historical Timeline</div>
+  </div>
+</nav>
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hblob" style="width:220px;height:220px;top:-75px;left:-40px;"></div>
+    <div class="hblob" style="width:140px;height:140px;bottom:-45px;right:45px;"></div>
+    <div class="hinner">
+      <div class="htitle">VERACITE</div>
+      <div class="hright">
+        <div class="hcta" onclick="SP('timeline')">&#9654; Historical Timeline</div>
+        <div class="hdate">Sunday, 19 April 2026</div>
+      </div>
+    </div>
+    <div class="habout-bar">
+      <strong>VERACITE</strong>
+      <span>One place for honest, contextual global news. Every story is summarised with 2–3 months of background so nothing comes out of nowhere. We report across conflict, politics, science, culture, and sport — no agenda, no noise.</span>
+    </div>
+  </div>
+
+  <div class="mgrid">
+    <div class="cl">
+      <div class="slabel">Current Headlines</div>
+      <div class="hgrid">
+        <div class="hcard" onclick="SA('iran')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Iran–Israel escalate with reciprocal strikes across the region</div></div></div>
+        <div class="hcard" onclick="SA('gaza')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Gaza death toll surpasses 50,000 as ceasefire talks collapse again</div></div></div>
+        <div class="hcard" onclick="SA('ai')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Technology</div><div class="hctitle">AI systems now autonomously manage power grids in three countries</div></div></div>
+        <div class="hcard" onclick="SA('elections')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Politics</div><div class="hctitle">Germany's new coalition government sworn in after 14 weeks of deadlock</div></div></div>
+        <div class="hcard" onclick="SA('sudan')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Sudan civil war enters third year — 10 million people displaced</div></div></div>
+        <div class="hcard" onclick="SA('space')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Technology</div><div class="hctitle">China's Tianwen-3 crew become first humans to land on Mars</div></div></div>
+        <div class="hcard" onclick="SA('climate')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Society &amp; Culture</div><div class="hctitle">Pacific island nations declare climate emergency at the UN</div></div></div>
+        <div class="hcard" onclick="SA('culture')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Society &amp; Culture</div><div class="hctitle">WHO declares global youth mental health crisis a public emergency</div></div></div>
+        <div class="hcard" onclick="SA('trade')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Politics</div><div class="hctitle">US–China trade war intensifies as tariffs reach 145% on key goods</div></div></div>
+        <div class="hcard" onclick="SA('sport')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Sport</div><div class="hctitle">2026 FIFA World Cup: favourites, upsets, and the race to the final</div></div></div>
+        <div class="hcard" onclick="SA('ukraine')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Ukraine ceasefire negotiations resume with US as lead mediator</div></div></div>
+        <div class="hcard" onclick="SA('bio')"><div class="hcimg"><div class="hcblob"></div></div><div class="hcbody"><div class="hccat">Technology</div><div class="hctitle">Breakthrough gene therapy eliminates sickle cell disease in clinical trials</div></div></div>
+      </div>
+      <div class="about-panel">
+        <h4>About Veracite</h4>
+        <p>Veracite was founded in 2026 with a simple premise: young adults deserve a news source that respects their intelligence. Most news is either overwhelming in volume or shallow in context. We do neither.</p>
+        <p>Every article includes 2–3 months of background so you understand why something matters, not just that it happened. Unfamiliar terms are defined inside the article. We cover conflict, politics, science, technology, culture, and sport — because the world doesn't fit into one category.</p>
+        <p>We have no advertisers. No political affiliation. No agenda beyond accuracy.</p>
+      </div>
+    </div>
+
+    <div class="cr">
+      <div class="slabel">Global Summary</div>
+      <div class="sumtext">
+        <p>The Middle East is at its most volatile in decades. <span class="slink" onclick="SA('iran')">Iran and Israel exchanged direct military strikes</span> in April — the first open acknowledged exchange between the two nations — raising the spectre of a wider regional war. In Gaza, <span class="slink" onclick="SA('gaza')">the death toll has passed 50,000</span> and famine conditions have been confirmed in the north, while ceasefire talks hosted in Cairo collapsed for the third time this year. Separately, <span class="slink" onclick="SA('sudan')">Sudan's civil war entered its third year</span> with 10 million displaced — one of the world's worst humanitarian crises, largely ignored by international media.</p>
+        <p>In geopolitics, the <span class="slink" onclick="SA('trade')">US–China trade war escalated sharply</span>, with tariffs reaching 145% on key goods including semiconductors and pharmaceuticals, fracturing supply chains that took decades to build. <span class="slink" onclick="SA('elections')">Germany finally formed a governing coalition</span> after 14 weeks of deadlock, committing to historic defence spending increases. <span class="slink" onclick="SA('ukraine')">Ukraine ceasefire talks reopened</span> under US mediation for the first time in over three years, though a deal remains distant.</p>
+        <p>In science and technology, <span class="slink" onclick="SA('space')">China landed the first humans on Mars</span> on 2 April, watched by 2.4 billion people — a milestone that reshuffled the global space race overnight. <span class="slink" onclick="SA('ai')">AI now autonomously manages national power grids</span> in three countries, while a <span class="slink" onclick="SA('bio')">gene therapy cure for sickle cell disease</span> passed Phase 3 clinical trials, offering hope to 8 million sufferers worldwide.</p>
+        <p>On climate and society, <span class="slink" onclick="SA('climate')">three Pacific island nations face total inundation</span> within 15 years as global temperatures hold above 1.62°C. The <span class="slink" onclick="SA('culture')">WHO declared a global youth mental health emergency</span>, citing a 42% rise in adolescent depression since 2019. And the <span class="slink" onclick="SA('sport')">2026 FIFA World Cup</span> is underway across North America, with Morocco and Japan producing the tournament's biggest upsets so far.</p>
+      </div>
+
+      <div style="margin-top:18px;">
+        <div class="slabel">Also In The News</div>
+        <div class="sitem" onclick="SA('trade')"><div class="sicat">Politics</div><div class="sititle">US–China tariffs reach 145% — global markets react sharply</div><div class="siblurb">Electronics and pharmaceutical supply chains fractured.</div></div>
+        <div class="sitem" onclick="SA('ukraine')"><div class="sicat">War &amp; Conflict</div><div class="sititle">Ukraine ceasefire: what is actually on the table</div></div>
+        <div class="sitem" onclick="SA('bio')"><div class="sicat">Technology</div><div class="sititle">Gene therapy eliminates sickle cell disease in 47 of 48 trial patients</div></div>
+        <div class="sitem" onclick="SA('sport')"><div class="sicat">Sport</div><div class="sititle">World Cup 2026: Morocco and Japan lead surprise runs</div><div class="siblurb">Both nations advanced as group winners ahead of seeded opponents.</div></div>
+        <div class="sitem" onclick="SA('nfl')"><div class="sicat">Sport</div><div class="sititle">NFL announces international expansion: London and Madrid to get franchises</div></div>
+        <div class="sitem" onclick="SA('drought')"><div class="sicat">Society &amp; Culture</div><div class="sititle">Southern Africa's worst drought in 40 years threatens food security for 20m</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div><div>Updated monthly &bull; For informational purposes only</div></div>
+</div>
+
+<div id="page-cat" class="page">
+  <div class="chero"><div><div class="chtitle" id="ct"></div><div class="chsub" id="cs"></div></div><div class="chico" id="ci"></div></div>
+  <div class="alist" id="ca"></div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+<div id="page-timeline" class="page">
+  <div class="thead"><h2>Historical Event Timeline</h2><p>Major events across conflict, science, culture, politics, sport, and exploration — from antiquity to 2026</p></div>
+  <div class="tfilters">
+    <button class="tfbtn on" onclick="TF('all',this)">All</button>
+    <button class="tfbtn" onclick="TF('war',this)">War &amp; Conflict</button>
+    <button class="tfbtn" onclick="TF('sci',this)">Science &amp; Discovery</button>
+    <button class="tfbtn" onclick="TF('pol',this)">Politics</button>
+    <button class="tfbtn" onclick="TF('cul',this)">Culture &amp; Society</button>
+    <button class="tfbtn" onclick="TF('eco',this)">Economy</button>
+    <button class="tfbtn" onclick="TF('spo',this)">Sport</button>
+  </div>
+  <div class="tbody" id="tlbody">
+    <div class="tline"></div>
+
+    <div class="titem" data-tag="war"><div class="tyear">2026</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Iran–Israel direct military exchange</div><div class="tdesc">The first open, acknowledged military exchange between Iran and Israel raises fears of a wider regional war involving Lebanon, Iraq, and Gulf states.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2026</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">First humans land on Mars</div><div class="tdesc">China's Tianwen-3 mission lands three taikonauts on the Martian surface on 2 April — the first crewed interplanetary landing in human history.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2025</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">G7 AI governance frameworks adopted</div><div class="tdesc">The world's leading economies agreed binding rules on AI transparency, safety testing, and labelling of AI-generated content for the first time.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">2024</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Global election super-cycle</div><div class="tdesc">Over 60 nations held national elections, affecting nearly 4 billion voters. Populist and far-right movements gained ground across Europe, Asia, and Latin America.</div></div></div></div>
+    <div class="titem" data-tag="spo"><div class="tyear">2024</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag spo">Sport</div><div class="tevent">Paris Olympic Games</div><div class="tdesc">France hosted the Summer Olympics for the third time. The opening ceremony held on the Seine river was watched by an estimated 1.5 billion people globally.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2024</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">First gene-edited pig kidney transplanted into a living human</div><div class="tdesc">Surgeons in Boston transplanted a genetically modified pig kidney into a patient, keeping them alive for 47 days — a landmark in xenotransplantation research.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">2023</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Hamas attacks Israel — Gaza war begins</div><div class="tdesc">The 7 October Hamas attack killed ~1,200 Israelis. Israel's military response became one of the most destructive urban campaigns in modern history.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">2023</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Hollywood strikes — writers and actors halt production</div><div class="tdesc">The WGA and SAG-AFTRA strikes paralysed the US entertainment industry for months, with AI's role in creative work at the centre of negotiations.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2022</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">James Webb Space Telescope first images released</div><div class="tdesc">NASA released the deepest infrared images of the universe ever captured, showing galaxies over 13 billion light years away and reshaping cosmological research.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">2022</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Russia invades Ukraine</div><div class="tdesc">The largest land war in Europe since 1945 triggered a global energy and food crisis. NATO expanded to include Finland and Sweden for the first time.</div></div></div></div>
+    <div class="titem" data-tag="spo"><div class="tyear">2022</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag spo">Sport</div><div class="tevent">Qatar FIFA World Cup — Argentina win</div><div class="tdesc">Lionel Messi finally won the World Cup in one of the most dramatic finals in history, defeating France on penalties. Widely regarded as the greatest World Cup final ever played.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">2022</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Death of Queen Elizabeth II</div><div class="tdesc">Queen Elizabeth II died on 8 September 2022 after 70 years on the throne — the longest reign in British history. King Charles III was crowned in 2023.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2021</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">US Capitol stormed by rioters</div><div class="tdesc">Supporters of President Trump stormed the US Capitol building on 6 January, attempting to halt the certification of the 2020 election result. Five people died.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2021</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">COVID-19 vaccines rolled out globally</div><div class="tdesc">Multiple vaccines developed in under a year — the fastest in history — began global rollout. mRNA technology, used by Pfizer and Moderna, opened a new era in vaccine development.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2020</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">COVID-19 pandemic declared</div><div class="tdesc">The WHO declared a global pandemic on 11 March 2020. Over 7 million deaths were recorded. Lockdowns, border closures, and economic collapse reshaped every aspect of daily life.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">2020</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">George Floyd killed — global protests erupt</div><div class="tdesc">The murder of George Floyd by a Minneapolis police officer sparked the largest civil rights protests in the United States since the 1960s, spreading to over 60 countries.</div></div></div></div>
+    <div class="titem" data-tag="eco"><div class="tyear">2020</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag eco">Economy</div><div class="tevent">Global recession — worst since 1929</div><div class="tdesc">COVID-19 caused the sharpest economic contraction in nearly a century. GDP fell across every major economy simultaneously for the first time in recorded history.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2019</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">First image of a black hole captured</div><div class="tdesc">The Event Horizon Telescope collaboration released the first direct image of a black hole — in galaxy M87 — confirming predictions of Einstein's general theory of relativity.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2016</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Brexit vote &amp; Trump elected</div><div class="tdesc">The UK voted 52-48% to leave the European Union. Weeks later, Donald Trump was elected US President — two events that defined a decade of Western political upheaval.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2016</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Gravitational waves detected for the first time</div><div class="tdesc">LIGO scientists announced the first direct detection of gravitational waves — ripples in spacetime caused by colliding black holes, confirming another prediction of Einstein's general relativity.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2015</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Paris Climate Agreement signed</div><div class="tdesc">195 nations agreed to limit global warming to 1.5–2°C above pre-industrial levels — the most significant multilateral climate accord in history.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2012</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Higgs boson particle discovered</div><div class="tdesc">CERN announced the discovery of the Higgs boson at the Large Hadron Collider — confirming the final missing piece of the Standard Model of particle physics.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">2011</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Arab Spring</div><div class="tdesc">Mass uprisings swept North Africa and the Middle East, toppling governments in Tunisia, Egypt, and Libya. The movement sparked hope for democratic change that largely went unrealised.</div></div></div></div>
+    <div class="titem" data-tag="eco"><div class="tyear">2008</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag eco">Economy</div><div class="tevent">Global financial crisis</div><div class="tdesc">The collapse of Lehman Brothers triggered the worst financial crisis since 1929, producing recessions across the developed world and a decade of austerity in Europe.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">2008</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Barack Obama elected US President</div><div class="tdesc">Obama became the first African-American President of the United States, winning on a platform of hope and change against the backdrop of two ongoing wars and a financial crisis.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2007</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">iPhone launched — the smartphone era begins</div><div class="tdesc">Apple's Steve Jobs unveiled the first iPhone in January 2007, fundamentally changing human communication, media consumption, commerce, and social interaction worldwide.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">2003</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">US-led invasion of Iraq</div><div class="tdesc">Coalition forces invaded Iraq, toppling Saddam Hussein. No weapons of mass destruction were found. The resulting power vacuum contributed directly to the rise of ISIS.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">2001</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">September 11 attacks</div><div class="tdesc">Al-Qaeda's attacks killed nearly 3,000 people and launched two decades of US military engagement in the Middle East, reshaping global security, travel, and civil liberties.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">2000</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Human genome sequenced</div><div class="tdesc">Scientists announced the first draft of the complete human genome — 3 billion DNA base pairs mapped — opening the door to personalised medicine and genetic research.</div></div></div></div>
+    <div class="titem" data-tag="eco"><div class="tyear">2000</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag eco">Economy</div><div class="tevent">Dot-com bubble bursts</div><div class="tdesc">The collapse of overvalued internet companies wiped out $5 trillion in market value. Many companies vanished; survivors like Amazon and Google reshaped the global economy.</div></div></div></div>
+    <div class="titem" data-tag="spo"><div class="tyear">2000</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag spo">Sport</div><div class="tevent">Sydney Olympics — Cathy Freeman lights the flame</div><div class="tdesc">Australia's Sydney Olympics are widely regarded as the greatest modern Games. Indigenous Australian Cathy Freeman lit the cauldron and won gold in the 400m — a defining moment of reconciliation.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1997</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Hong Kong returned to China</div><div class="tdesc">The UK handed Hong Kong back to China on 1 July 1997 after 156 years of colonial rule, under a "one country, two systems" framework that has since been substantially eroded.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">1994</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Rwandan Genocide</div><div class="tdesc">Approximately 800,000 Tutsi and moderate Hutu were killed in 100 days. The international community's failure to intervene remains a defining indictment of global institutions.</div></div></div></div>
+    <div class="titem" data-tag="spo"><div class="tyear">1994</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag spo">Sport</div><div class="tevent">Nelson Mandela opens the Football World Cup in the USA</div><div class="tdesc">The first World Cup held in the United States coincided with South Africa's first democratic elections. Brazil won a record fourth title. The event marked football's arrival as a truly global sport in North America.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1991</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Dissolution of the Soviet Union</div><div class="tdesc">15 independent nations emerged from the USSR's collapse, ending the Cold War and creating a brief unipolar world order dominated by the United States.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">1991</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">World Wide Web made publicly available</div><div class="tdesc">Tim Berners-Lee opened the World Wide Web to the public, beginning the most rapid transformation of human communication and commerce since the printing press.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1989</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Berlin Wall falls — Cold War ends</div><div class="tdesc">The fall of the Berlin Wall on 9 November 1989 symbolised the collapse of Soviet-style communism in Eastern Europe. Germany was reunified in 1990.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">1989</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Tiananmen Square massacre</div><div class="tdesc">Chinese troops killed hundreds of pro-democracy protesters in Beijing's Tiananmen Square on 4 June. The event remains censored in China and symbolises the limits of political reform under the Communist Party.</div></div></div></div>
+    <div class="titem" data-tag="spo"><div class="tyear">1986</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag spo">Sport</div><div class="tevent">Maradona's "Hand of God"</div><div class="tdesc">Diego Maradona scored one of the most controversial — and greatest — goals in football history in the 1986 World Cup quarter-final against England. Argentina won the tournament.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1983</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">HIV/AIDS identified</div><div class="tdesc">Scientists identified the HIV virus as the cause of AIDS. The epidemic went on to kill over 40 million people. The crisis transformed global understanding of public health and stigma.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1979</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Iranian Revolution</div><div class="tdesc">The Shah of Iran was overthrown and replaced by an Islamic Republic under Ayatollah Khomeini — fundamentally reshaping Middle Eastern geopolitics in ways that reverberate to this day.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1969</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Moon landing — Apollo 11</div><div class="tdesc">Neil Armstrong and Buzz Aldrin became the first humans to walk on the moon on 20 July 1969, watched live by an estimated 600 million people — then a third of the world's population.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">1969</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Woodstock music festival</div><div class="tdesc">400,000 people gathered on a farm in upstate New York for a three-day music festival that became the defining symbol of the 1960s counterculture movement.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1963</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Assassination of JFK</div><div class="tdesc">US President John F. Kennedy was assassinated in Dallas on 22 November 1963 — an event that shattered American optimism and whose circumstances remain debated today.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">1963</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Martin Luther King Jr.'s "I Have a Dream" speech</div><div class="tdesc">King delivered his landmark address to 250,000 people at the Lincoln Memorial in Washington D.C. during the March on Washington — a turning point in the American civil rights movement.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">1950</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">Korean War begins</div><div class="tdesc">North Korea invaded South Korea in June 1950, drawing in US-led UN forces and Chinese troops. The war ended in a 1953 armistice — technically never a formal peace — that defines the Korean Peninsula today.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1948</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">Founding of Israel &amp; the Nakba</div><div class="tdesc">Israel declared statehood on 14 May 1948. The subsequent war displaced ~700,000 Palestinians — the Nakba, or 'catastrophe' — laying the foundation for a conflict unresolved to this day.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1947</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">India and Pakistan independence</div><div class="tdesc">The partition of British India created two independent states, triggering one of history's largest mass migrations and intercommunal violence that killed up to 2 million people.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">1945</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">World War II ends — UN founded</div><div class="tdesc">The defeat of Nazi Germany and Imperial Japan ended the deadliest conflict in history. The United Nations was established to provide a framework for international peace.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1945</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Atomic bomb dropped on Hiroshima and Nagasaki</div><div class="tdesc">The US dropped nuclear bombs on two Japanese cities on 6 and 9 August, killing over 200,000 people and inaugurating the atomic age — and the decades-long threat of nuclear war.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">1939</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">World War II begins</div><div class="tdesc">Germany invaded Poland on 1 September 1939, triggering declarations of war from Britain and France. Over six years, the conflict killed an estimated 70–85 million people — the deadliest in human history.</div></div></div></div>
+    <div class="titem" data-tag="eco"><div class="tyear">1929</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag eco">Economy</div><div class="tevent">Wall Street Crash — Great Depression begins</div><div class="tdesc">The US stock market crashed in October 1929, triggering a decade-long global depression, mass unemployment, and political instability that contributed to the rise of fascism in Europe.</div></div></div></div>
+    <div class="titem" data-tag="war"><div class="tyear">1914</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag war">War</div><div class="tevent">World War I begins</div><div class="tdesc">The assassination of Archduke Franz Ferdinand triggered cascading alliances. Four years of industrialised warfare killed 20 million people and dismantled four empires.</div></div></div></div>
+    <div class="titem" data-tag="cul"><div class="tyear">1903</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag cul">Culture</div><div class="tevent">Wright Brothers — first powered flight</div><div class="tdesc">Orville Wright flew 37 metres at Kitty Hawk, North Carolina on 17 December 1903. Within 66 years, humans had reached the moon. Aviation became the backbone of global trade and travel.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1895</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">X-rays discovered by Wilhelm Röntgen</div><div class="tdesc">Röntgen's accidental discovery of X-ray radiation transformed medicine, enabling doctors to see inside the human body without surgery for the first time.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1859</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Darwin publishes On the Origin of Species</div><div class="tdesc">Charles Darwin's theory of natural selection fundamentally changed humanity's understanding of life on Earth. It remains the foundational framework of modern biology.</div></div></div></div>
+    <div class="titem" data-tag="eco"><div class="tyear">1760</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag eco">Economy</div><div class="tevent">Industrial Revolution begins in Britain</div><div class="tdesc">Steam-powered machinery, factories, and mass production transformed British — and then global — society from agrarian to industrial. It created modern capitalism and urban civilisation as we know it.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1789</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">French Revolution begins</div><div class="tdesc">The storming of the Bastille on 14 July 1789 ended the French monarchy and introduced the modern concepts of liberty, equality, and popular sovereignty that underpin most democracies today.</div></div></div></div>
+    <div class="titem" data-tag="pol"><div class="tyear">1776</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag pol">Politics</div><div class="tevent">American Declaration of Independence</div><div class="tdesc">The thirteen American colonies declared independence from Britain on 4 July 1776, establishing a republic founded on Enlightenment principles that inspired democratic movements worldwide.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1440</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">Gutenberg printing press invented</div><div class="tdesc">Johannes Gutenberg's movable-type press democratised access to knowledge, enabling the Protestant Reformation, the Scientific Revolution, and the Renaissance — arguably the most consequential invention in history.</div></div></div></div>
+    <div class="titem" data-tag="sci"><div class="tyear">1347</div><div><div class="tdot"></div><div class="tcontent"><div class="ttag sci">Science</div><div class="tevent">The Black Death reaches Europe</div><div class="tdesc">Bubonic plague killed one-third of Europe's population between 1347 and 1351 — approximately 25 million people. It accelerated the collapse of feudalism and transformed European society.</div></div></div></div>
+  </div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+<div id="page-article" class="page">
+  <div class="backbtn" id="abk">&#8592; Back</div>
+  <div class="hdiv"></div>
+  <div class="afull" id="ac"></div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+</div>
+
+<script>
+const GL={
+  ceasefire:"A temporary agreement to stop fighting. It is not a permanent peace deal — it pauses hostilities while negotiations continue.",
+  genocide:"The deliberate killing of a large group of people based on ethnicity, nationality, religion or race. Classified as a crime under international law.",
+  "ICJ":"International Court of Justice — the principal judicial body of the United Nations. It settles legal disputes between nations and gives advisory opinions on international law.",
+  "UN Security Council":"A 15-member UN body with primary responsibility for international peace and security. Five permanent members (US, UK, France, Russia, China) each hold veto power.",
+  "humanitarian corridor":"A safe passage agreed upon by conflicting parties to allow civilians or aid workers to move through a war zone without being targeted.",
+  famine:"A severe shortage of food resulting in widespread hunger and death. Declared by the UN only when specific thresholds of malnutrition, mortality, and food insecurity are all met.",
+  "proxy war":"A conflict where two major powers support opposing sides rather than fighting each other directly, using a third country or group as their battlefield.",
+  coalition:"In politics, a coalition government is formed when no single party wins enough seats to govern alone, so two or more parties share power.",
+  "NATO":"North Atlantic Treaty Organization — a military alliance of 32 countries committing members to collective defence: an attack on one is treated as an attack on all.",
+  tariff:"A tax imposed by a government on imported goods, making foreign products more expensive to encourage purchase of domestically produced alternatives.",
+  "supply chain":"The entire sequence of processes from raw materials to consumer — including manufacturing, transport, and distribution. Disruptions can raise prices globally.",
+  "autonomous AI":"An AI system that makes and executes decisions without requiring human approval for each individual action.",
+  "gene therapy":"A medical technique that modifies a person's genes to treat or prevent disease, rather than using conventional drugs or surgery.",
+  "sickle cell disease":"A hereditary blood disorder causing red blood cells to form an abnormal crescent shape, blocking blood flow and causing severe pain and organ damage.",
+  "clinical trial":"A research study testing a new medical treatment on human volunteers to assess safety and effectiveness before wide availability.",
+  "1.5°C threshold":"The target in the Paris Agreement to limit global warming to 1.5 degrees Celsius above pre-industrial levels, beyond which climate impacts become significantly more severe.",
+  "IPCC":"Intergovernmental Panel on Climate Change — the UN body that assesses climate science. Its reports form the basis of international climate policy.",
+  "exclusive economic zone":"A sea zone extending 200 nautical miles from a nation's coast, within which it has special rights over exploration and use of marine resources.",
+  attrition:"A military strategy of wearing down the enemy through continuous losses rather than seeking single decisive battles.",
+  sanctions:"Penalties — trade restrictions, asset freezes, travel bans — imposed by one country on another to pressure a change in behaviour.",
+  "ICC":"International Criminal Court — a tribunal with jurisdiction to prosecute individuals for genocide, crimes against humanity, and war crimes.",
+  "48-team tournament":"The 2026 FIFA World Cup expanded from 32 to 48 nations, the largest in the tournament's history, including more teams from Africa, Asia, and the Americas.",
+  populism:"A political approach framing politics as a struggle between ordinary people and a corrupt elite, often appealing to widespread grievances against institutions.",
+  austerity:"Government policies that reduce public spending and increase taxes to cut budget deficits, typically after financial crises.",
+  "Nakba":"Arabic for 'catastrophe' — refers to the displacement of approximately 700,000 Palestinians during the 1948 Arab–Israeli War. Central to Palestinian national identity.",
+  "mRNA technology":"Messenger RNA — a molecule that carries genetic instructions. mRNA vaccines teach cells to make a protein that triggers an immune response, without using a live virus.",
+  xenotransplantation:"The transplantation of organs, tissues, or cells from one species into another — for example, transplanting a pig organ into a human patient.",
+  "dot-com bubble":"A rapid rise and collapse in the valuations of internet-based companies in the late 1990s, driven by speculation rather than real profits.",
+  "Standard Model":"The theoretical framework describing the fundamental particles and forces that make up the universe — everything except gravity.",
+  "WGA":"Writers Guild of America — the trade union representing television and film writers in the United States.",
+  "feudalism":"The medieval social and economic system in which land was exchanged for military service, with lords above peasants and kings above lords.",
+};
+
+function dfn(word,key){
+  const k=key||word;
+  const def=GL[k]||GL[word]||null;
+  if(!def)return word;
+  return `<span class="gterm">${word}<span class="ttip"><strong>${k}:</strong> ${def}</span></span>`;
+}
+
+const A={
+  iran:{cat:'War & Conflict',date:'April 2026',glossary:['ceasefire','proxy war','UN Security Council','sanctions'],
+    title:'Iran–Israel tensions escalate following reciprocal strikes across the region',
+    body:`<p>In what analysts are describing as the most dangerous escalation between Iran and Israel in modern history, both nations carried out direct, acknowledged strikes on each other's territory and ${dfn('proxy war','proxy war')} assets over a two-week period in April 2026. The exchange follows years of shadow warfare — assassinations, cyberattacks, and covert operations — that finally broke into open confrontation.</p>
+    <h3>What triggered the escalation</h3>
+    <p>Iranian-backed forces launched a coordinated missile and drone attack on Israeli military installations in the Negev desert on 3 April 2026. Israel responded within 48 hours with precision strikes on Iranian Revolutionary Guard facilities near Isfahan. A second Iranian salvo followed, targeting Haifa port infrastructure. Both sides publicly acknowledged responsibility — a break from years of deniable shadow conflict.</p>
+    <h3>Regional spillover</h3>
+    <p>Hezbollah in Lebanon significantly increased rocket fire into northern Israel. US carrier groups repositioned to the eastern Mediterranean. Saudi Arabia and the UAE called for immediate de-escalation. Oil prices surged above $130 per barrel.</p>
+    <h3>Diplomatic response</h3>
+    <p>The ${dfn('UN Security Council','UN Security Council')} failed to pass a ${dfn('ceasefire','ceasefire')} resolution due to competing vetoes. Qatar and Oman are mediating back-channel talks. The EU and US announced additional economic ${dfn('sanctions','sanctions')} on Iran targeting oil exports and the central bank. As of mid-April, both sides have paused strikes but neither has agreed to stand down.</p>
+    <h3>What comes next</h3>
+    <p>Intelligence assessments circulated to allied governments suggest Iran is reconsidering its nuclear posture — which would represent a fundamental escalation of the crisis. The international community has a narrow window to prevent a broader regional war.</p>`},
+
+  gaza:{cat:'War & Conflict',date:'April 2026',glossary:['genocide','famine','ICJ','humanitarian corridor','Nakba','ICC'],
+    title:'Gaza: death toll surpasses 50,000 as ceasefire negotiations stall again',
+    body:`<p>The conflict in Gaza, now entering its third year, has claimed more than 50,000 Palestinian lives. International aid agencies have confirmed ${dfn('famine','famine')} conditions in the northern strip. International legal bodies are now examining whether the events constitute ${dfn('genocide','genocide')} under international law.</p>
+    <h3>Humanitarian conditions</h3>
+    <p>The World Food Programme confirmed over 500,000 people in northern Gaza face catastrophic food insecurity. Hospitals operate at fractional capacity. Over 1.8 million Palestinians have been displaced. Access through ${dfn('humanitarian corridor','humanitarian corridor')}s has been repeatedly blocked. The UN High Commissioner for Human Rights described the situation as "without parallel in modern history."</p>
+    <h3>The stalled ceasefire</h3>
+    <p>Cairo-hosted ${dfn('ceasefire','ceasefire')} negotiations collapsed for the third time in 2026 in late March. Disputes centre on the phased release of the remaining hostages held by Hamas, the future governance of Gaza, and the scope of Israeli military withdrawal. The US, Qatar, and Egypt are co-mediating.</p>
+    <h3>International legal proceedings</h3>
+    <p>South Africa's case against Israel at the ${dfn('ICJ','ICJ')} continued hearings in early 2026. The ${dfn('ICC','ICC')} issued arrest warrants for senior officials. Over 40 nations have severed or downgraded diplomatic ties with Israel since 2024. Several nations have recognised Palestinian statehood during this period.</p>
+    <h3>Historical context</h3>
+    <p>The war began with the Hamas attack of 7 October 2023, which killed approximately 1,200 Israelis and took 250 hostage. The displacement of Palestinians stretches back to 1948 — known as the ${dfn('Nakba','Nakba')} — a history that shapes every dimension of the current conflict and the international legal arguments being made.</p>`},
+
+  ai:{cat:'Technological Innovation',date:'March 2026',glossary:['autonomous AI','supply chain'],
+    title:'AI systems now autonomously manage power grids in three countries',
+    body:`<p>Norway, Singapore, and the UAE became the first countries to hand primary operational control of their national electricity grids to ${dfn('autonomous AI','autonomous AI')} systems in early 2026, marking a significant threshold in critical infrastructure automation.</p>
+    <h3>How it works</h3>
+    <p>The AI systems model demand forecasts, renewable generation variability, and transmission constraints across thousands of nodes simultaneously — a task that exceeds human cognitive capacity at real-time speed. Norway's system reduced grid instability events by 73% and cut electricity waste by 18% in its first quarter of operation.</p>
+    <h3>Safety and accountability concerns</h3>
+    <p>A brief outage in Singapore in January — caused by a scenario the AI had never encountered — renewed calls for mandatory human-override thresholds. A coalition of 200 engineers and ethicists warned of "accountability voids" when AI failures occur in critical systems. The EU is drafting emergency legislation to set minimum oversight requirements.</p>
+    <h3>The broader picture</h3>
+    <p>This development sits within a rapidly shifting global ${dfn('supply chain','supply chain')} of technology governance. G7 AI frameworks from 2025 did not anticipate this pace of infrastructure deployment. Policymakers are playing catch-up with technology already operational at national scale. Critics note that when AI manages power, it also — indirectly — manages hospitals, water systems, and financial networks.</p>`},
+
+  elections:{cat:'Politics & Government',date:'April 2026',glossary:['coalition','NATO','populism','austerity'],
+    title:"Germany's new coalition government sworn in after 14 weeks of deadlock",
+    body:`<p>Germany swore in its new three-party ${dfn('coalition','coalition')} government on 7 April 2026 — ending 14 weeks of post-election negotiations, the longest in the Federal Republic's history.</p>
+    <h3>Why the deadlock</h3>
+    <p>The September 2025 election produced a fragmented Bundestag with no obvious majority. The rise of ${dfn('populism','populism')} through the Alternative für Deutschland to 22% complicated majority arithmetic. Talks collapsed twice over defence spending, energy policy, and migration controls.</p>
+    <h3>Policy commitments</h3>
+    <p>The coalition commits Germany to 2.5% of GDP on defence — a historic shift underpinned by ${dfn('NATO','NATO')} pressure and the realities of the Ukraine war. The Greens secured a commitment to phase out domestic gas heating subsidies by 2030. Economists warn the spending package risks reversing years of fiscal ${dfn('austerity','austerity')}.</p>
+    <h3>EU significance</h3>
+    <p>Germany's paralysis created a leadership vacuum in Brussels during a period of acute geopolitical pressure. The new government's first foreign trip will be to Kyiv. Berlin's commitment to continued Ukraine support is now written into the coalition agreement.</p>`},
+
+  sudan:{cat:'War & Conflict',date:'April 2026',glossary:['ceasefire','humanitarian corridor','attrition','ICC'],
+    title:'Sudan civil war enters third year with 10 million people displaced',
+    body:`<p>Sudan's civil war between the Sudanese Armed Forces and the paramilitary Rapid Support Forces entered its third year in April 2026. Over 10 million people have been displaced — surpassing Ukraine at the peak of its displacement crisis.</p>
+    <h3>Origins</h3>
+    <p>The war began in April 2023 when tensions between the SAF and RSF, which had jointly ruled Sudan after the 2021 coup, erupted into open fighting in Khartoum. What began as an intra-military power struggle became a broader civil conflict, with intense ethnic dimensions in Darfur. RSF forces stand accused of systematic atrocities. The ${dfn('ICC','ICC')} is investigating.</p>
+    <h3>Humanitarian toll</h3>
+    <p>The UN estimates over 150,000 deaths. Famine has been declared in parts of North Darfur. All attempts to open ${dfn('humanitarian corridor','humanitarian corridor')}s have failed. Aid workers have been killed by both sides. The ${dfn('attrition','attrition')} strategy employed by both sides makes rapid resolution unlikely.</p>
+    <h3>Why the world isn't watching</h3>
+    <p>Sudan receives a fraction of the media and political attention given to Ukraine or Gaza despite comparable humanitarian severity. Aid organisations repeatedly describe it as "the world's most forgotten war." No ${dfn('ceasefire','ceasefire')} talks are currently scheduled.</p>`},
+
+  space:{cat:'Technological Innovation',date:'April 2026',glossary:[],
+    title:"China's Tianwen-3 crew become the first humans to land on Mars",
+    body:`<p>On 2 April 2026, three taikonauts aboard the Tianwen-3 spacecraft touched down on the Utopia Planitia region of Mars — the first humans ever to set foot on another planet. The landing was broadcast live to an estimated 2.4 billion viewers globally.</p>
+    <h3>The mission</h3>
+    <p>Commander Zhang Wei, Liu Hua, and UAE national Omar Al-Rashidi will spend 60 days on the Martian surface conducting geological surveys, testing resource utilisation technology, and deploying atmospheric sensors. A pre-positioned habitat and supply cache had been delivered by an uncrewed mission two years prior.</p>
+    <h3>Geopolitical dimensions</h3>
+    <p>China's achievement — accomplished without international partnership and years ahead of NASA's timeline — represents a landmark in the new space race. The US Congress immediately convened hearings on NASA funding. ESA acknowledged it had not anticipated China's pace of development.</p>
+    <h3>What this means for humanity</h3>
+    <p>Beyond geopolitics, the mission answers a question humanity has contemplated for centuries: humans can survive and operate on another planet. The scientific data returned will inform whether Mars could eventually support permanent human presence.</p>`},
+
+  climate:{cat:'Society & Culture',date:'March 2026',glossary:['1.5°C threshold','IPCC','exclusive economic zone','sanctions'],
+    title:'Pacific island nations declare climate emergency at the UN General Assembly',
+    body:`<p>Representatives of Tuvalu, Kiribati, and the Marshall Islands delivered joint addresses at a special UN General Assembly session in March 2026, formally declaring a collective climate emergency and calling on the international community to treat sea level rise as an existential threat equivalent to armed conflict.</p>
+    <h3>The science</h3>
+    <p>New ${dfn('IPCC','IPCC')} modelling confirmed that under current emissions trajectories, all three nations face complete inundation within 15 years. Average global temperatures in 2025 were confirmed at 1.62°C above pre-industrial levels — the second consecutive year above the ${dfn('1.5°C threshold','1.5°C threshold')}.</p>
+    <h3>Relocation and sovereignty</h3>
+    <p>All three nations have active relocation programmes primarily to Australia, New Zealand, and Fiji. Legal scholars raise unresolved questions about what happens to national sovereignty and each nation's ${dfn('exclusive economic zone','exclusive economic zone')} when its territory disappears beneath the ocean. There is no precedent in international law.</p>
+    <h3>International response</h3>
+    <p>The G20 agreed in principle to a $50 billion climate relocation fund, though only $8 billion has been committed. Small island states called the gap between pledges and disbursements "a pattern of abandonment." Unlike trade ${dfn('sanctions','sanctions')}, climate commitments carry no binding enforcement mechanism.</p>`},
+
+  culture:{cat:'Society & Culture',date:'February 2026',glossary:['clinical trial'],
+    title:'WHO declares global youth mental health crisis a public health emergency',
+    body:`<p>The World Health Organisation's most comprehensive report on adolescent mental health, released in February 2026, declared the global youth mental health crisis has reached the scale of a public health emergency. The report documents a 42% rise in depression and anxiety diagnoses among people aged 13–24 since 2019.</p>
+    <h3>Key findings</h3>
+    <p>Social media use correlates strongly with mental health deterioration, particularly among girls aged 13–17. Suicide is now the second leading cause of death for people aged 15–29 globally. Fewer than 15% of those with diagnosable conditions in low-income countries receive any care at all.</p>
+    <h3>What the WHO recommends</h3>
+    <p>Mandatory mental health literacy in schools globally, algorithmic restrictions on content targeting minors, and a tripling of national mental health budgets by 2030. It calls for social media platforms to be regulated as health-affecting products, not merely communication tools.</p>
+    <h3>Policy landscape</h3>
+    <p>Australia, Norway, and the UK have passed legislation restricting social media access for under-16s. Critics argue such measures address symptoms rather than root causes, and that economic inequality and housing insecurity are equally significant drivers of youth mental ill-health that legislation cannot solve.</p>`},
+
+  trade:{cat:'Politics & Government',date:'April 2026',glossary:['tariff','supply chain','sanctions'],
+    title:'US–China trade war intensifies as tariffs reach 145% on key goods',
+    body:`<p>The trade conflict between the United States and China reached new intensity in early 2026, with the US imposing ${dfn('tariff','tariff')}s of up to 145% on semiconductors, electric vehicles, and pharmaceutical ingredients. China retaliated with 125% tariffs on US agricultural exports and rare earth mineral restrictions.</p>
+    <h3>What triggered the escalation</h3>
+    <p>A series of US accusations of Chinese industrial espionage and alleged dumping of subsidised goods at below-market prices led the current administration to invoke emergency economic powers. China's government described the measures as "economic bullying" and illegal under WTO rules.</p>
+    <h3>Impact on supply chains</h3>
+    <p>The escalation has fractured global ${dfn('supply chain','supply chain')}s built over decades. Manufacturers in Southeast Asia, Mexico, and India are repositioning as alternative production hubs. Consumer electronics prices in both countries have risen 15–25% year-on-year. The global pharmaceutical industry faces acute shortages of active ingredients.</p>
+    <h3>Broader context</h3>
+    <p>The trade war sits within a broader US–China rivalry covering technology, military posture in the Pacific, and influence over developing nations. Economic ${dfn('sanctions','sanctions')} are distinct from ${dfn('tariff','tariff')}s — sanctions target specific entities or sectors as punishment, while tariffs are applied broadly to imports — but both are now being deployed simultaneously.</p>`},
+
+  sport:{cat:'Society & Culture',date:'April 2026',glossary:['48-team tournament'],
+    title:'2026 FIFA World Cup: favourites, upsets, and the race to the final',
+    body:`<p>The 2026 FIFA World Cup — hosted across the United States, Canada, and Mexico — is the first ${dfn('48-team tournament','48-team tournament')}, meaning 16 more nations competed than in any previous edition. Group stage play concluded in late March with several significant upsets reshaping expectations for the knockout rounds.</p>
+    <h3>Group stage highlights</h3>
+    <p>Morocco topped their group ahead of France in the result of the tournament so far. Japan defeated both Argentina and Spain to advance as group winners. Brazil struggled with tactical cohesion despite individual brilliance. England won their group but drew heavy criticism for uninspired performances against weaker opposition.</p>
+    <h3>Favourites for the knockout stages</h3>
+    <p>France, Brazil, and Argentina remain bookmakers' frontrunners, with Spain and Portugal close behind. Morocco's run has electrified African football fans globally. The United States — as host nation — have advanced to the round of 16 for the first time since 2014, generating enormous domestic interest in the sport.</p>
+    <h3>Off the pitch</h3>
+    <p>Human rights groups protested the inclusion of nations with poor human rights records. FIFA's expanded format has faced criticism from club football, whose seasons have been compressed to accommodate the longer tournament schedule. Total projected global viewership for the final is estimated at 2.8 billion people.</p>`},
+
+  ukraine:{cat:'War & Conflict',date:'April 2026',glossary:['ceasefire','attrition','NATO','sanctions'],
+    title:'Ukraine ceasefire negotiations resume with the US as lead mediator',
+    body:`<p>Structured ${dfn('ceasefire','ceasefire')} negotiations between Ukraine and Russia resumed in April 2026 — the first since the early months of the 2022 invasion — with the United States acting as lead mediator. Three years of ${dfn('attrition','attrition')}al warfare have left front lines largely stabilised since mid-2024.</p>
+    <h3>What's on the table</h3>
+    <p>Negotiations centre on a ceasefire along current lines of control, security guarantees for Ukraine short of full ${dfn('NATO','NATO')} membership, and the conditions under which approximately $300 billion in frozen Russian assets could be released or redirected for Ukrainian reconstruction.</p>
+    <h3>Why now</h3>
+    <p>A new US administration less committed to unconditional Ukrainian support, combined with European war fatigue and Ukrainian battlefield exhaustion, has created political conditions for talks. Russia, facing a stagnant economy under international ${dfn('sanctions','sanctions')}, has also signalled willingness to negotiate.</p>
+    <h3>Obstacles</h3>
+    <p>Ukraine refuses to recognise Russian-held territory, which Moscow insists is non-negotiable. The Baltic states and Poland strongly oppose any deal perceived as rewarding Russian aggression. France and Germany are quietly pressing Kyiv to consider territorial compromises. A formal peace treaty remains distant. A ceasefire, if agreed, would not resolve the underlying conflict.</p>`},
+
+  bio:{cat:'Technological Innovation',date:'March 2026',glossary:['gene therapy','sickle cell disease','clinical trial'],
+    title:'Breakthrough gene therapy eliminates sickle cell disease in clinical trials',
+    body:`<p>A ${dfn('gene therapy','gene therapy')} developed jointly by the Broad Institute and University College London has eliminated all symptoms of ${dfn('sickle cell disease','sickle cell disease')} in 47 of 48 patients in Phase 3 ${dfn('clinical trial','clinical trial')}s. The therapy is now before regulators in the US, UK, and EU for emergency approval.</p>
+    <h3>How the therapy works</h3>
+    <p>The treatment uses a modified viral vector to deliver a corrected version of the haemoglobin gene directly into the patient's bone marrow stem cells. Unlike earlier gene therapies requiring full bone marrow destruction, this technique is less invasive and has shown a significantly lower risk of serious side effects. Most treated patients are now producing normal red blood cells.</p>
+    <h3>Who it will help</h3>
+    <p>Sickle cell disease affects approximately 8 million people worldwide, with the highest burden in sub-Saharan Africa, South Asia, and among people of African descent in the Americas and Europe. Current treatments manage symptoms; this therapy offers what researchers are calling a functional cure.</p>
+    <h3>Access and cost</h3>
+    <p>The therapy is expected to cost $2–3 million per patient in high-income countries, raising immediate questions about access in the low-income nations where the disease is most prevalent. The WHO has convened an emergency working group on equitable distribution. Advocates are calling for a tiered pricing model before regulatory approval is granted.</p>`},
+
+  nfl:{cat:'Society & Culture',date:'March 2026',glossary:[],
+    title:'NFL announces international expansion: London and Madrid to receive franchises',
+    body:`<p>The National Football League announced in March 2026 that two new international franchises will begin play in the 2028 season — the London Monarchs and the Madrid Matadors — expanding the league to 34 teams for the first time in its history. The move follows years of sold-out international series games in London, Munich, and Mexico City.</p>
+    <h3>The business case</h3>
+    <p>NFL Commissioner Roger Goodell described Europe as "the final frontier for American football," citing television deals with Sky Sports and DAZN that have delivered 40 million European viewers per playoff game. Franchise fees are reported at $4 billion each — nearly double the previous record — underscoring the league's financial confidence in international markets.</p>
+    <h3>How it will work</h3>
+    <p>Both teams will play half their home games in their respective cities and half at a designated US venue in the first three seasons, before transitioning to full home schedules. The NFL's collective bargaining agreement had to be renegotiated to address player concerns about travel demands and the impact on families.</p>
+    <h3>Cultural significance</h3>
+    <p>The expansion reflects a broader globalisation of North American professional sports that accelerated significantly in the 2020s, with the NBA, NHL, and MLB all pursuing permanent international presences. Critics in the US have raised concerns about franchise relocation and the dilution of regional rivalries that define American football's cultural identity.</p>`},
+
+  drought:{cat:'Society & Culture',date:'April 2026',glossary:['famine'],
+    title:"Southern Africa's worst drought in 40 years threatens food security for 20 million",
+    body:`<p>A severe drought affecting Zambia, Zimbabwe, Malawi, and Mozambique — the worst in the region since 1984 — has pushed 20 million people toward acute food insecurity. The crisis follows two consecutive failed rainy seasons linked directly to the El Niño weather pattern intensified by climate change.</p>
+    <h3>On the ground</h3>
+    <p>Maize — the region's staple crop — has failed across vast areas. Cattle are dying in unprecedented numbers as rivers and boreholes dry up. Several districts in Zambia have been declared disaster zones. The UN World Food Programme confirmed that without immediate intervention, parts of the region will meet the technical threshold for declared ${dfn('famine','famine')} by mid-2026.</p>
+    <h3>Government responses</h3>
+    <p>Zimbabwe declared a state of emergency in February, releasing $2 billion in emergency funds. Zambia has requested IMF emergency financing. Several nations have suspended fuel taxes to reduce the cost of food transport. Regional cooperation through the Southern African Development Community has been mobilised, though funding gaps remain significant.</p>
+    <h3>Climate context</h3>
+    <p>Scientists from the World Weather Attribution group confirmed that the drought was made at least three times more likely by human-caused climate change. Southern Africa has experienced more frequent and severe droughts since the 1980s, but the speed of the current crisis has overwhelmed early warning systems that were designed for slower-onset events.</p>`}
+};
+
+const CATS={
+  war:{title:'War & Conflict',sub:'Ongoing and recent conflicts reported with full context',ico:'&#9876;',arts:['iran','gaza','ukraine','sudan']},
+  tech:{title:'Technological Innovation',sub:'Breakthroughs and disruptions shaping tomorrow',ico:'&#9881;',arts:['ai','space','bio']},
+  pol:{title:'Politics & Government',sub:'Elections, governance, and geopolitical shifts',ico:'&#9878;',arts:['elections','trade','ukraine']},
+  soc:{title:'Society & Culture',sub:'The forces reshaping how we live, think, and connect',ico:'&#9998;',arts:['climate','culture','sport','nfl','drought']}
+};
+
+let bk='home';
+
+function SP(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  const m={home:'nh',timeline:'ntl'};
+  if(m[n])document.getElementById(m[n]).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function SC(c){
+  const cat=CATS[c];
+  document.getElementById('ct').innerHTML=cat.title;
+  document.getElementById('cs').textContent=cat.sub;
+  document.getElementById('ci').innerHTML=cat.ico;
+  const el=document.getElementById('ca');
+  el.innerHTML='';
+  cat.arts.forEach(id=>{
+    const a=A[id];
+    const d=document.createElement('div');
+    d.className='arow';
+    d.innerHTML=`<div class="athumb"><div class="atblob"></div></div><div><div class="adate">${a.date}</div><div class="atitle">${a.title}</div><div class="asum">${a.body.replace(/<[^>]+>/g,' ').trim().substring(0,140)}...</div></div>`;
+    d.onclick=()=>{bk='cat-'+c;SA(id);};
+    el.appendChild(d);
+  });
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-cat').classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  const nm={war:'nw',tech:'nt',pol:'np',soc:'ns'};
+  if(nm[c])document.getElementById(nm[c]).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function SA(id){
+  const a=A[id];
+  let gh='';
+  if(a.glossary&&a.glossary.length){
+    gh='<div class="gloss"><h4>Key Terms &amp; Definitions</h4>';
+    a.glossary.forEach(k=>{if(GL[k])gh+=`<div class="gentry"><div class="gword">${k}</div><div class="gdef">${GL[k]}</div></div>`;});
+    gh+='</div>';
+  }
+  document.getElementById('ac').innerHTML=`<div class="afcat">${a.cat}</div><div class="aftitle">${a.title}</div><div class="afmeta">${a.date} &nbsp;&bull;&nbsp; Veracite Editorial</div><div class="afbody">${a.body}</div>${gh}`;
+  document.getElementById('abk').onclick=()=>{
+    if(bk.startsWith('cat-'))SC(bk.replace('cat-',''));
+    else SP('home');
+  };
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-article').classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  window.scrollTo(0,0);
+}
+
+function TF(tag,btn){
+  document.querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.titem').forEach(el=>{
+    if(tag==='all'||el.dataset.tag===tag)el.classList.remove('hidden');
+    else el.classList.add('hidden');
+  });
+}
+
+window.SP=SP;window.SC=SC;window.SA=SA;window.TF=TF;
+</script>
