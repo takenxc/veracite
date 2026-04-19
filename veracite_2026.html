@@ -1,0 +1,285 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --or:#E8820C;--ord:#B86200;--orl:#F5A340;
+  --bk:#0F0F0F;--wh:#FFFFFF;
+  --g1:#F6F4F0;--g2:#E8E5DE;--g3:#AEAD a8;--gt:#52514D;
+  --serif:'Georgia',serif;
+}
+.page{display:none;}
+.page.active{display:block;}
+
+nav{background:var(--or);display:flex;align-items:stretch;border-bottom:2px solid var(--ord);}
+.nl{background:var(--bk);color:var(--wh);padding:10px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;min-width:108px;}
+.nl .est{font-size:8px;letter-spacing:2px;opacity:.6;text-transform:uppercase;margin-bottom:2px;}
+.nl .logo{font-family:var(--serif);font-size:15px;font-weight:bold;letter-spacing:1px;}
+.nlinks{display:flex;flex:1;overflow-x:auto;}
+.nlink{color:var(--wh);padding:0 16px;font-family:var(--serif);font-size:12px;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,.18);white-space:nowrap;transition:background .15s;}
+.nlink:hover,.nlink.on{background:rgba(0,0,0,.2);}
+
+.hero{background:var(--wh);border-bottom:2px solid var(--bk);position:relative;overflow:hidden;}
+.hblob{position:absolute;border-radius:50%;background:var(--or);opacity:.1;}
+.hinner{padding:36px 32px 28px;position:relative;z-index:1;display:flex;align-items:center;gap:28px;}
+.htitle{font-family:var(--serif);font-size:62px;font-weight:400;letter-spacing:-1px;color:var(--bk);line-height:1;flex:1;}
+.haside{display:flex;flex-direction:column;gap:12px;min-width:190px;}
+.hcta{border:1.5px solid var(--bk);padding:9px 14px;font-size:11px;font-family:var(--serif);letter-spacing:.5px;cursor:pointer;background:var(--wh);text-align:center;transition:background .15s,color .15s;}
+.hcta:hover{background:var(--bk);color:var(--wh);}
+.habout{font-size:11px;line-height:1.7;color:var(--gt);border-left:2.5px solid var(--or);padding-left:10px;}
+.habout strong{color:var(--bk);font-size:11px;display:block;margin-bottom:3px;font-family:var(--serif);}
+
+.slabel{font-family:var(--serif);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ord);padding-bottom:5px;margin-bottom:14px;border-bottom:1.5px solid var(--bk);display:flex;align-items:center;gap:8px;}
+.slabel::after{content:'';flex:1;height:1px;background:var(--g2);}
+
+.mgrid{display:grid;grid-template-columns:2fr 1fr;border-top:1px solid var(--g2);}
+.cl{padding:26px 26px 26px 32px;border-right:1px solid var(--g2);}
+.cr{padding:22px 26px 22px 22px;}
+
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.hcard{border:1px solid var(--g2);cursor:pointer;background:var(--wh);transition:border-color .15s;}
+.hcard:hover{border-color:var(--or);}
+.hcimg{background:var(--g1);height:76px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gt);border-bottom:1px solid var(--g2);position:relative;overflow:hidden;}
+.hcblob{width:38px;height:38px;border-radius:50%;background:var(--or);opacity:.25;position:absolute;top:8px;left:8px;}
+.hcbody{padding:9px 11px 11px;}
+.hccat{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ord);margin-bottom:3px;}
+.hctitle{font-size:12px;font-family:var(--serif);font-weight:bold;line-height:1.4;color:var(--bk);}
+
+.sumtext{font-size:12px;line-height:1.85;color:#1a1a1a;}
+.sumtext p{margin-bottom:12px;}
+.slink{color:var(--ord);text-decoration:underline;cursor:pointer;font-weight:bold;font-style:italic;}
+.slink:hover{color:var(--or);}
+
+.sitem{padding:9px 0;border-bottom:.5px solid var(--g2);cursor:pointer;}
+.sitem:hover .sititle{color:var(--ord);}
+.sicat{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);margin-bottom:3px;}
+.sititle{font-size:11px;font-family:var(--serif);font-weight:bold;color:var(--bk);line-height:1.4;}
+.siblurb{font-size:10px;color:var(--gt);margin-top:3px;line-height:1.5;}
+
+.sfooter{background:var(--bk);color:rgba(255,255,255,.5);font-size:10px;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;letter-spacing:.4px;}
+.sfooter span{color:var(--orl);font-weight:bold;}
+
+.chero{background:var(--bk);color:var(--wh);padding:26px 32px 20px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--or);}
+.chtitle{font-size:28px;font-family:var(--serif);font-weight:400;}
+.chsub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;}
+.chico{width:52px;height:52px;border:2px solid var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--or);font-family:var(--serif);font-weight:bold;}
+
+.alist{padding:26px 32px;background:var(--wh);}
+.arow{display:grid;grid-template-columns:90px 1fr;gap:14px;padding:14px 0;border-bottom:.5px solid var(--g2);cursor:pointer;}
+.arow:hover .atitle{color:var(--ord);}
+.athumb{background:var(--g1);height:64px;display:flex;align-items:center;justify-content:center;border:1px solid var(--g2);position:relative;overflow:hidden;}
+.atblob{width:26px;height:26px;border-radius:50%;background:var(--or);opacity:.22;position:absolute;top:6px;left:6px;}
+.adate{font-size:9px;color:var(--ord);letter-spacing:.5px;margin-bottom:3px;}
+.atitle{font-size:13px;font-family:var(--serif);font-weight:bold;line-height:1.4;margin-bottom:5px;color:var(--bk);}
+.asum{font-size:11px;color:var(--gt);line-height:1.6;}
+
+.thead{background:var(--or);padding:26px 32px;border-bottom:2px solid var(--ord);}
+.thead h2{font-size:26px;font-family:var(--serif);font-weight:400;color:var(--wh);}
+.thead p{font-size:11px;color:rgba(255,255,255,.75);margin-top:4px;}
+.tbody{padding:26px 32px;position:relative;background:var(--wh);}
+.tline{position:absolute;left:72px;top:0;bottom:0;width:2px;background:var(--g2);}
+.titem{display:grid;grid-template-columns:50px 1fr;gap:18px;margin-bottom:26px;position:relative;}
+.tyear{font-family:var(--serif);font-size:12px;font-weight:bold;color:var(--ord);text-align:right;padding-top:2px;}
+.tdot{position:absolute;left:64px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--or);border:2px solid var(--wh);box-shadow:0 0 0 1.5px var(--ord);z-index:2;}
+.tcontent{background:var(--g1);border-left:3px solid var(--or);padding:9px 13px 11px;border-radius:0;}
+.tevent{font-size:12px;font-family:var(--serif);font-weight:bold;margin-bottom:3px;color:var(--bk);}
+.tdesc{font-size:11px;color:var(--gt);line-height:1.6;}
+
+.afull{padding:30px 32px;max-width:700px;background:var(--wh);}
+.afcat{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ord);margin-bottom:9px;}
+.aftitle{font-size:24px;font-family:var(--serif);font-weight:400;line-height:1.3;margin-bottom:11px;color:var(--bk);}
+.afmeta{font-size:10px;color:var(--gt);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--g2);}
+.afbody{font-size:13px;line-height:1.9;color:#1a1a1a;}
+.afbody p{margin-bottom:16px;}
+.afbody h3{font-size:14px;font-family:var(--serif);font-weight:bold;margin:22px 0 9px;border-left:3px solid var(--or);padding-left:9px;border-radius:0;color:var(--bk);}
+.backbtn{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.5px;color:var(--ord);cursor:pointer;margin:14px 32px;text-transform:uppercase;}
+.backbtn:hover{text-decoration:underline;}
+.div{height:1px;background:var(--g2);margin:0 32px;}
+#page-article{background:var(--wh);}
+#page-cat{background:var(--wh);}
+#page-timeline{background:var(--wh);}
+</style>
+
+<div id="app" style="background:#fff;font-family:Georgia,serif;">
+
+<nav>
+  <div class="nl" onclick="SP('home')"><span class="est">Est. 2026</span><span class="logo">VERACITE</span></div>
+  <div class="nlinks">
+    <div class="nlink on" id="nh" onclick="SP('home')">Home</div>
+    <div class="nlink" id="nw" onclick="SC('war')">War &amp; Conflict</div>
+    <div class="nlink" id="nt" onclick="SC('tech')">Technological Innovation</div>
+    <div class="nlink" id="np" onclick="SC('pol')">Politics &amp; Government</div>
+    <div class="nlink" id="ns" onclick="SC('soc')">Society &amp; Culture</div>
+    <div class="nlink" id="ntl" onclick="SP('timeline')">&#9654; Historical Timeline</div>
+  </div>
+</nav>
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hblob" style="width:260px;height:260px;top:-90px;left:-50px;"></div>
+    <div class="hblob" style="width:160px;height:160px;bottom:-55px;right:55px;"></div>
+    <div class="hinner">
+      <div class="htitle">VERACITE</div>
+      <div class="haside">
+        <div class="hcta" onclick="SP('timeline')">&#9654; Historical timeline</div>
+        <div class="habout"><strong>About Us</strong>Veracite gives young adults one place for honest, contextual global news. Every summary covers 2–3 months of events so nothing comes out of nowhere.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mgrid">
+    <div class="cl">
+      <div class="slabel">Current Headlines</div>
+      <div class="hgrid">
+        <div class="hcard" onclick="SA('iran')">
+          <div class="hcimg"><div class="hcblob"></div>War &amp; Conflict</div>
+          <div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Iran–Israel tensions escalate following reciprocal strikes across the region</div></div>
+        </div>
+        <div class="hcard" onclick="SA('gaza')">
+          <div class="hcimg"><div class="hcblob"></div>War &amp; Conflict</div>
+          <div class="hcbody"><div class="hccat">War &amp; Conflict</div><div class="hctitle">Gaza: death toll surpasses 50,000 as ceasefire negotiations stall again</div></div>
+        </div>
+        <div class="hcard" onclick="SA('ai')">
+          <div class="hcimg"><div class="hcblob"></div>Technology</div>
+          <div class="hcbody"><div class="hccat">Technological Innovation</div><div class="hctitle">AI systems now autonomously manage power grids in three countries</div></div>
+        </div>
+        <div class="hcard" onclick="SA('elections')">
+          <div class="hcimg"><div class="hcblob"></div>Politics</div>
+          <div class="hcbody"><div class="hccat">Politics &amp; Government</div><div class="hctitle">Germany's new coalition government sworn in after months of deadlock</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cr">
+      <div class="slabel">Global Summary</div>
+      <div class="sumtext">
+        <p>The Middle East continues to dominate global attention. <span class="slink" onclick="SA('iran')">Iran and Israel exchanged direct strikes</span> across a two-week period in April 2026, drawing urgent calls from the UN Security Council and threatening to widen the conflict into a regional war.</p>
+        <p>In Gaza, <span class="slink" onclick="SA('gaza')">the humanitarian situation has reached catastrophic levels</span> with international aid agencies reporting famine conditions across the northern strip. Ceasefire talks in Cairo collapsed for the third time this year.</p>
+        <p>On the technological front, <span class="slink" onclick="SA('ai')">autonomous AI systems are reshaping critical infrastructure</span>, raising urgent questions about accountability and oversight that legislators are only beginning to address.</p>
+        <p>In Europe, <span class="slink" onclick="SA('elections')">Germany finally formed a governing coalition</span> after 14 weeks of negotiations, with major implications for EU defence spending and Ukraine aid.</p>
+      </div>
+
+      <div style="margin-top:22px;">
+        <div class="slabel">Also In The News</div>
+        <div class="sitem" onclick="SA('climate')"><div class="sicat">Society &amp; Culture</div><div class="sititle">Pacific island nations declare climate emergency at UN General Assembly</div><div class="siblurb">Three nations face complete inundation within 15 years, envoys warn.</div></div>
+        <div class="sitem" onclick="SA('sudan')"><div class="sicat">War &amp; Conflict</div><div class="sititle">Sudan civil war enters third year — 10 million displaced</div></div>
+        <div class="sitem" onclick="SA('space')"><div class="sicat">Technological Innovation</div><div class="sititle">China lands crewed mission on Mars — a first for humankind</div><div class="siblurb">The Tianwen-3 crew touched down on 2 April 2026.</div></div>
+        <div class="sitem" onclick="SA('culture')"><div class="sicat">Society &amp; Culture</div><div class="sititle">Global youth mental health crisis: WHO calls for systemic reform</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div><div>Summaries updated monthly &bull; For informational purposes</div></div>
+</div>
+
+<div id="page-cat" class="page">
+  <div class="chero"><div><div class="chtitle" id="ct"></div><div class="chsub" id="cs"></div></div><div class="chico" id="ci"></div></div>
+  <div class="alist" id="ca"></div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+<div id="page-timeline" class="page">
+  <div class="thead"><h2>Historical Event Timeline</h2><p>Notable moments that shaped the modern world</p></div>
+  <div class="tbody">
+    <div class="tline"></div>
+    <div class="titem"><div class="tyear">2026</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Iran–Israel direct conflict</div><div class="tdesc">Mutual strikes mark the first direct, acknowledged military exchange between the two nations, threatening wider regional escalation.</div></div></div></div>
+    <div class="titem"><div class="tyear">2024</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Global election super-cycle</div><div class="tdesc">Over 60 nations held national elections — the largest single-year democratic exercise in history, reshaping governments across every continent.</div></div></div></div>
+    <div class="titem"><div class="tyear">2023</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Hamas attacks &amp; Gaza war begins</div><div class="tdesc">The October 7 Hamas attacks on Israel and the subsequent Israeli military campaign in Gaza triggered the most devastating conflict in the region in decades.</div></div></div></div>
+    <div class="titem"><div class="tyear">2022</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Russia invades Ukraine</div><div class="tdesc">The largest land war in Europe since 1945 destabilised global energy markets, displaced millions, and fractured the post-Cold War security order.</div></div></div></div>
+    <div class="titem"><div class="tyear">2020</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">COVID-19 pandemic</div><div class="tdesc">The WHO declared a global pandemic on 11 March 2020. Over 7 million deaths were recorded before widespread vaccination campaigns contained transmission.</div></div></div></div>
+    <div class="titem"><div class="tyear">2015</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Paris Climate Agreement</div><div class="tdesc">195 nations committed to limiting warming to 1.5–2°C above pre-industrial levels in the most significant multilateral climate accord in history.</div></div></div></div>
+    <div class="titem"><div class="tyear">2011</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Arab Spring</div><div class="tdesc">A wave of pro-democracy uprisings swept North Africa and the Middle East, toppling governments in Tunisia, Egypt, and Libya and reshaping regional politics.</div></div></div></div>
+    <div class="titem"><div class="tyear">2008</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Global financial crisis</div><div class="tdesc">The collapse of Lehman Brothers triggered the worst financial crisis since 1929, producing recessions across the developed world and years of austerity.</div></div></div></div>
+    <div class="titem"><div class="tyear">2001</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">September 11 attacks</div><div class="tdesc">Al-Qaeda's attacks on New York and Washington launched two decades of US military engagement in the Middle East and transformed global security policy.</div></div></div></div>
+    <div class="titem"><div class="tyear">1994</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Rwandan Genocide</div><div class="tdesc">Approximately 800,000 Tutsi and moderate Hutu were killed in 100 days. The international community's failure to intervene remains a defining indictment of global institutions.</div></div></div></div>
+    <div class="titem"><div class="tyear">1991</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Dissolution of the Soviet Union</div><div class="tdesc">15 independent states emerged from the USSR's collapse, ending the Cold War and reconfiguring global power for the following three decades.</div></div></div></div>
+    <div class="titem"><div class="tyear">1948</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">Founding of Israel &amp; first Arab–Israeli war</div><div class="tdesc">The declaration of Israeli statehood and the immediate war with neighbouring Arab states set the foundations for a conflict still unresolved today.</div></div></div></div>
+    <div class="titem"><div class="tyear">1945</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">End of World War II &amp; UN founded</div><div class="tdesc">The deadliest conflict in history ended with the defeat of Nazi Germany and Imperial Japan. The United Nations was established to prevent future global war.</div></div></div></div>
+    <div class="titem"><div class="tyear">1914</div><div><div class="tdot"></div><div class="tcontent"><div class="tevent">World War I begins</div><div class="tdesc">The assassination of Archduke Franz Ferdinand triggered a cascade of alliances, resulting in four years of industrialised warfare and 20 million deaths.</div></div></div></div>
+  </div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+<div id="page-article" class="page">
+  <div class="backbtn" id="abk">&#8592; Back</div>
+  <div class="div"></div>
+  <div class="afull" id="ac"></div>
+  <div class="sfooter"><div>&#169; 2026 <span>VERACITE</span> &mdash; Reporting with truth.</div></div>
+</div>
+
+</div>
+
+<script>
+const A={
+  iran:{cat:'War & Conflict',date:'April 2026',title:'Iran–Israel tensions escalate following reciprocal strikes across the region',body:`<p>In what analysts are describing as the most dangerous escalation between Iran and Israel in modern history, both nations carried out direct, acknowledged strikes on each other's territory and proxy assets over a two-week period in April 2026. The exchange follows years of shadow warfare — assassinations, cyberattacks, and proxy conflicts — that finally broke into open confrontation.</p><h3>What triggered the escalation</h3><p>Iranian-backed forces launched a coordinated missile and drone attack on Israeli military installations in the Negev desert on 3 April 2026, which Israel's Iron Dome and Arrow-3 systems partially intercepted. Israel responded within 48 hours with precision strikes on Iranian Revolutionary Guard facilities near Isfahan and Tabriz. A second Iranian salvo followed days later, targeting Haifa port infrastructure.</p><h3>Regional spillover</h3><p>Hezbollah in Lebanon significantly increased rocket fire into northern Israel. US carrier groups repositioned to the eastern Mediterranean. Saudi Arabia and the UAE called for immediate de-escalation, while Iraq and Syria warned against their territory being used as a transit corridor for either side. Oil prices surged above $130 per barrel on global markets.</p><h3>Diplomatic efforts</h3><p>The UN Security Council convened emergency sessions on three consecutive days but failed to pass a ceasefire resolution due to vetoes from both the US (protecting Israel) and Russia and China (protecting Iran). Qatar and Oman are currently mediating back-channel talks. As of mid-April, both sides have paused strikes but neither has agreed to stand down.</p><h3>What comes next</h3><p>The situation remains highly volatile. Intelligence assessments shared with allied governments suggest Iran is reconsidering its nuclear posture, which would represent a fundamental escalation of the crisis. The international community faces a narrow window to prevent a broader regional war.</p>`},
+
+  gaza:{cat:'War & Conflict',date:'April 2026',title:'Gaza: death toll surpasses 50,000 as ceasefire negotiations stall again',body:`<p>The conflict in Gaza, now entering its third year following the Hamas attacks of October 2023, has claimed more than 50,000 Palestinian lives according to Gaza's health ministry — a figure the UN describes as likely an undercount given the collapse of health infrastructure. The humanitarian situation has deteriorated into what multiple aid agencies are calling a man-made famine.</p><h3>Humanitarian conditions</h3><p>The World Food Programme confirmed in March 2026 that over 500,000 people in northern Gaza are in "catastrophic" food insecurity — the highest classification before declared famine. Hospitals operate at fractional capacity. Over 1.8 million Palestinians have been displaced, many multiple times, with most concentrated in a narrow southern corridor near Rafah.</p><h3>The stalled ceasefire</h3><p>Cairo-hosted negotiations collapsed for the third time in 2026 in late March, with disputes centering on the phased release of the remaining hostages held by Hamas, the future governance of Gaza, and the extent of Israeli military withdrawal. The US, Qatar, and Egypt are co-mediating, but bridging the positions of the two parties has proven impossible so far.</p><h3>International legal proceedings</h3><p>South Africa's genocide case against Israel at the International Court of Justice continued hearings in early 2026. The ICJ issued provisional measures ordering Israel to ensure humanitarian aid access, though enforcement mechanisms remain limited. Over 40 nations have either severed or downgraded diplomatic ties with Israel since 2024.</p><h3>Context: the broader conflict</h3><p>The war began on 7 October 2023 when Hamas launched an unprecedented attack on southern Israel, killing approximately 1,200 people and taking around 250 hostage. Israel's subsequent military campaign, aimed at dismantling Hamas, has resulted in one of the most destructive urban warfare campaigns of the 21st century.</p>`},
+
+  ai:{cat:'Technological Innovation',date:'March 2026',title:'AI systems now autonomously manage power grids in three countries',body:`<p>Norway, Singapore, and the United Arab Emirates became the first countries to hand primary operational control of their national electricity grids to AI systems in early 2026, marking a significant threshold in critical infrastructure automation. The systems — developed by three separate firms using different architectures — operate with human oversight panels but can make real-time load-balancing and emergency response decisions without human approval.</p><h3>How it works</h3><p>The AI systems continuously model demand forecasts, renewable generation variability, and transmission constraints across thousands of nodes simultaneously — a task that exceeds human cognitive capacity at real-time speed. In Norway's case, the system has reduced grid instability events by 73% and cut electricity waste by an estimated 18% in its first quarter of operation.</p><h3>Safety and accountability concerns</h3><p>Critics, including a coalition of 200 engineers and ethicists who published an open letter in February, warn that critical infrastructure AI creates "accountability voids" when failures occur. A brief outage in Singapore in January — later attributed to an edge-case the AI had never encountered — renewed calls for mandatory human-override thresholds. The EU is drafting emergency legislation to set minimum human oversight requirements for AI managing critical national infrastructure.</p><h3>The broader AI governance picture</h3><p>This development sits within a rapidly shifting regulatory landscape. The G7's 2025 AI governance frameworks, while significant, did not anticipate the pace of deployment in infrastructure. Policymakers are now playing catch-up with technology that is already operational.</p>`},
+
+  elections:{cat:'Politics & Government',date:'April 2026',title:"Germany's new coalition government sworn in after months of deadlock",body:`<p>Germany swore in its new three-party coalition government on 7 April 2026, ending 14 weeks of fractious post-election negotiations — the longest coalition formation process in the Federal Republic's history. The new government brings together the centre-right CDU/CSU, the Social Democrats, and the Greens in an awkward arrangement that required significant policy compromises from all three parties.</p><h3>What the deadlock was about</h3><p>The September 2025 federal election produced a fragmented Bundestag with no obvious majority coalition. The rise of the far-right Alternative für Deutschland to 22% of the vote complicated negotiations by shifting the political arithmetic. Talks collapsed twice over disagreements on defence spending increases demanded by NATO, energy policy, and migration controls.</p><h3>Policy implications</h3><p>The coalition agreement commits Germany to spending 2.5% of GDP on defence — a historic shift for a country whose post-war constitution embedded pacifist norms. This has significant implications for European security and support for Ukraine. On climate, the Greens secured a commitment to phase out domestic gas heating subsidies by 2030, over CDU objections.</p><h3>EU-wide significance</h3><p>Germany's political paralysis over the past four months created a leadership vacuum in Brussels. With France simultaneously dealing with its own domestic political instability, the EU's two largest members were effectively sidelined during a period of acute geopolitical pressure. The new Berlin government's first foreign trip will be to Kyiv.</p>`},
+
+  climate:{cat:'Society & Culture',date:'March 2026',title:'Pacific island nations declare climate emergency at UN General Assembly',body:`<p>Representatives of Tuvalu, Kiribati, and the Marshall Islands delivered joint addresses at a special UN General Assembly session in March 2026, formally declaring a collective climate emergency and calling on the international community to treat sea level rise as an existential threat equivalent to armed conflict. The declaration carries symbolic rather than legal weight, but its political impact has been significant.</p><h3>The science</h3><p>New modelling published by the Intergovernmental Panel on Climate Change in February 2026 confirmed that under current emissions trajectories, all three nations face complete inundation of their main inhabited islands within 15 years. Even the most optimistic scenarios allow only partial habitability by mid-century. Average global temperatures in 2025 were confirmed as 1.62°C above pre-industrial levels — the second consecutive year above the 1.5°C Paris threshold.</p><h3>Relocation and sovereignty</h3><p>All three nations have active relocation programmes — primarily to Australia, New Zealand, and Fiji — but legal scholars have raised unresolved questions about what happens to national sovereignty, exclusive economic zones, and UN membership when a nation's territory disappears beneath the ocean. These questions have no precedent in international law.</p><h3>International response</h3><p>The G20 agreed in principle to a $50 billion climate relocation fund at its February summit, though only $8 billion has been committed. Small island states have called the gap between pledges and disbursements "a pattern of abandonment."</p>`},
+
+  sudan:{cat:'War & Conflict',date:'April 2026',title:'Sudan civil war enters third year with 10 million displaced',body:`<p>Sudan's civil war between the Sudanese Armed Forces and the paramilitary Rapid Support Forces entered its third year in April 2026, having produced one of the largest displacement crises in the world. Over 10 million people have been forced from their homes — surpassing the displacement figures of Ukraine at the peak of its crisis.</p><h3>Origins of the conflict</h3><p>The war began in April 2023 when tensions between the SAF and RSF, which had jointly ruled Sudan after the 2021 coup, erupted into open fighting in Khartoum. What started as an intra-military power struggle rapidly became a broader civil conflict, with ethnic dimensions particularly acute in Darfur, where RSF forces have been accused of systematic atrocities against non-Arab communities.</p><h3>The humanitarian toll</h3><p>The UN estimates that over 150,000 people have been killed, with many more deaths uncounted in inaccessible areas. Famine has been declared in parts of North Darfur. International aid access remains severely constrained, with aid workers killed and humanitarian convoys blocked by both sides.</p><h3>Why the world isn't watching</h3><p>Sudan's crisis has received a fraction of the media coverage and international political attention given to Ukraine or Gaza, despite comparable or greater humanitarian severity. Aid organisations have repeatedly described it as "the world's most forgotten war."</p>`},
+
+  space:{cat:'Technological Innovation',date:'April 2026',title:"China lands crewed mission on Mars — a first for humankind",body:`<p>On 2 April 2026, three Chinese taikonauts aboard the Tianwen-3 spacecraft touched down on the Utopia Planitia region of Mars, becoming the first humans ever to set foot on another planet. The landing followed a seven-month transit from Earth and was broadcast live to an estimated global audience of 2.4 billion people.</p><h3>The mission</h3><p>Commander Zhang Wei and mission specialists Liu Hua and Omar Al-Rashidi — the latter a Emirati national flying under a bilateral space agreement — will spend 60 days on the Martian surface conducting geological surveys, testing in-situ resource utilisation technology, and deploying a network of atmospheric sensors. A pre-positioned supply cache and habitat module had been delivered by an uncrewed mission two years prior.</p><h3>Geopolitical dimensions</h3><p>China's achievement, accomplished without international partnership and years ahead of NASA's own crewed Mars timeline, represents a profound milestone in the new space race. NASA's Artemis programme, which has focused on lunar infrastructure, acknowledged that it had underestimated the pace of Chinese capability development. The US Congress immediately convened hearings on space programme funding.</p><h3>What this means for humanity</h3><p>Beyond geopolitics, the mission answers a question humanity has contemplated for centuries: humans can survive and work on another world. The scientific data returned will inform whether Mars could eventually support permanent human presence.</p>`},
+
+  culture:{cat:'Society & Culture',date:'February 2026',title:'Global youth mental health crisis: WHO calls for systemic reform',body:`<p>The World Health Organisation released its most comprehensive report on adolescent mental health in February 2026, declaring that the global youth mental health crisis has reached the scale of a public health emergency. The report documents a 42% rise in depression and anxiety diagnoses among people aged 13–24 since 2019 across all income groups and regions.</p><h3>Key findings</h3><p>Social media use correlates strongly with mental health deterioration, particularly among girls aged 13–17, though researchers emphasise this is one of several contributing factors alongside economic precarity, climate anxiety, and pandemic after-effects. Suicide is now the second leading cause of death for people aged 15–29 globally. Treatment gaps are severe — fewer than 15% of those with diagnosable conditions in low-income countries receive any care.</p><h3>What the WHO is calling for</h3><p>The report recommends mandatory mental health literacy education in schools globally, regulated restrictions on algorithmically amplified content targeting minors, and a tripling of national mental health budget allocations by 2030. It also calls for social media platforms to be regulated as health-affecting products, not merely communication tools.</h3><h3>The policy landscape</h3><p>Several countries — including Australia, Norway, and the UK — have passed or are passing legislation restricting social media access for under-16s. Critics argue such measures address symptoms rather than root causes, and that economic inequality and housing insecurity are equally significant drivers of youth mental ill-health.</p>`}
+};
+
+const CATS={
+  war:{title:'War & Conflict',sub:'Ongoing and recent conflicts reported in full context',ico:'&#9876;',arts:['iran','gaza','sudan']},
+  tech:{title:'Technological Innovation',sub:'Breakthroughs and disruptions shaping tomorrow',ico:'&#9881;',arts:['ai','space']},
+  pol:{title:'Politics & Government',sub:'Elections, governance, and geopolitical shifts',ico:'&#9878;',arts:['elections']},
+  soc:{title:'Society & Culture',sub:'The forces reshaping how we live and connect',ico:'&#9998;',arts:['climate','culture']}
+};
+
+let bk='home';
+
+function SP(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  const m={home:'nh',timeline:'ntl'};
+  if(m[n])document.getElementById(m[n]).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function SC(c){
+  const cat=CATS[c];
+  document.getElementById('ct').innerHTML=cat.title;
+  document.getElementById('cs').textContent=cat.sub;
+  document.getElementById('ci').innerHTML=cat.ico;
+  const el=document.getElementById('ca');
+  el.innerHTML='';
+  cat.arts.forEach(id=>{
+    const a=A[id];
+    const d=document.createElement('div');
+    d.className='arow';
+    d.innerHTML=`<div class="athumb"><div class="atblob"></div></div><div><div class="adate">${a.date}</div><div class="atitle">${a.title}</div><div class="asum">${a.body.replace(/<[^>]+>/g,' ').trim().substring(0,130)}...</div></div>`;
+    d.onclick=()=>{bk='cat-'+c;SA(id);};
+    el.appendChild(d);
+  });
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-cat').classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  const nm={war:'nw',tech:'nt',pol:'np',soc:'ns'};
+  if(nm[c])document.getElementById(nm[c]).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function SA(id){
+  const a=A[id];
+  document.getElementById('ac').innerHTML=`<div class="afcat">${a.cat}</div><div class="aftitle">${a.title}</div><div class="afmeta">${a.date} &nbsp;&bull;&nbsp; Veracite Editorial</div><div class="afbody">${a.body}</div>`;
+  document.getElementById('abk').onclick=()=>{
+    if(bk.startsWith('cat-'))SC(bk.replace('cat-',''));
+    else SP('home');
+  };
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-article').classList.add('active');
+  document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('on'));
+  window.scrollTo(0,0);
+}
+
+window.SP=SP;window.SC=SC;window.SA=SA;
+</script>
